@@ -10,7 +10,6 @@ import java.util.Random;
 
 
 public class InsertionSort extends JPanel {
-    private static final long serialVersionID = 1L;
     private final int WIDTH = 1000, HEIGHT = WIDTH * 9 /16;
     private final int SIZE = 200;
     private final float BAR_WIDTH = WIDTH/SIZE;
