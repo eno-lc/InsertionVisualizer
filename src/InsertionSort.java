@@ -1,20 +1,13 @@
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.net.URL;
 import java.util.Random;
-
-
 
 public class InsertionSort extends JPanel {
     private final int WIDTH = 1000, HEIGHT = WIDTH * 9 /16;
     private final int SIZE = 200;
-    private final float BAR_WIDTH = WIDTH/SIZE;
-    private float[] bar_height = new float[SIZE];
-    private SwingWorker<Void, Void> shuffler, sorter;
+    private final float[] bar_height = new float[SIZE];
+    private SwingWorker<Void, Void> sorter;
     private int current_index, compareTo;
     public static JFrame frame = new JFrame("Insertion Visualizer");
 
@@ -32,18 +25,18 @@ public class InsertionSort extends JPanel {
         Graphics2D g2d = (Graphics2D)g;
         g2d.setColor(Color.white);
         Rectangle2D.Float bar;
+        float BAR_WIDTH = WIDTH / SIZE;
         for(int i = 0; i<SIZE; i++){
-            bar = new Rectangle2D.Float(i*BAR_WIDTH, 0, BAR_WIDTH, bar_height[i]);
-
+            bar = new Rectangle2D.Float(i* BAR_WIDTH, 0, BAR_WIDTH, bar_height[i]);
              g2d.fill(bar);
         }
-        g2d.setColor(Color.red);
-        bar = new Rectangle2D.Float(current_index*BAR_WIDTH, 0, BAR_WIDTH, bar_height[current_index]);
-        g2d.fill(bar);
+             g2d.setColor(Color.red);
+             bar = new Rectangle2D.Float(current_index* BAR_WIDTH, 0, BAR_WIDTH, bar_height[current_index]);
+             g2d.fill(bar);
 
-        g2d.setColor(Color.green);
-        bar = new Rectangle2D.Float(compareTo*BAR_WIDTH, 0, BAR_WIDTH, bar_height[compareTo]);
-        g2d.fill(bar);
+             g2d.setColor(Color.green);
+             bar = new Rectangle2D.Float(compareTo* BAR_WIDTH, 0, BAR_WIDTH, bar_height[compareTo]);
+             g2d.fill(bar);
 
     }
 
@@ -51,7 +44,6 @@ public class InsertionSort extends JPanel {
         sorter = new SwingWorker<>() {
             @Override
             protected Void doInBackground() throws InterruptedException {
-                int middle = SIZE/2;
                 for(current_index = 1; current_index < SIZE; current_index++){
                     compareTo = current_index;
                     while(compareTo > 0 && bar_height[compareTo] < bar_height[compareTo - 1]){
@@ -70,10 +62,10 @@ public class InsertionSort extends JPanel {
     }
 
     private void initShuffler(){
-        shuffler = new SwingWorker<>() {
+        SwingWorker<Void, Void> shuffler = new SwingWorker<>() {
             @Override
             protected Void doInBackground() throws InterruptedException {
-                int middle = SIZE/2;
+                int middle = SIZE / 2;
                 for (int i = 0, j = middle; i < middle; i++, j++) {
                     int random_index = new Random().nextInt(SIZE);
                     swap(i, random_index);
@@ -86,8 +78,9 @@ public class InsertionSort extends JPanel {
                 }
                 return null;
             }
+
             @Override
-            public void done(){
+            public void done() {
                 super.done();
                 sorter.execute();
             }
@@ -100,8 +93,6 @@ public class InsertionSort extends JPanel {
         bar_height[indexA] = bar_height[indexB];
         bar_height[indexB] = temp;
     }
-
-
 
     private void initBarHeight(){
         float interval = (float) HEIGHT / SIZE;
@@ -120,6 +111,5 @@ public class InsertionSort extends JPanel {
            frame.setLocationRelativeTo(null);
            frame.setVisible(true);
         });
-
     }
 }
